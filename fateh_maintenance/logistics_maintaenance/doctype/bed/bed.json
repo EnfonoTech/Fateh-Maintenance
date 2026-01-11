@@ -1,0 +1,198 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:bed_number",
+ "creation": "2025-01-27 00:00:00",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "category",
+  "bed_number",
+  "make",
+  "column_break_ycqj",
+  "safety_tag_date",
+  "color",
+  "number_of_axles",
+  "column_break_1",
+  "load_capacity",
+  "length",
+  "width",
+  "section_break_tyres",
+  "left_tyres",
+  "section_break_ekkj",
+  "right_tyres",
+  "section_break_assignment",
+  "current_vehicle",
+  "assignment_status",
+  "column_break_qmbq",
+  "assign_date",
+  "total_kms_run",
+  "column_break_vszw",
+  "last_maintenance_date",
+  "last_maintenance_km"
+ ],
+ "fields": [
+  {
+   "fieldname": "category",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Category",
+   "options": "Flat bed\nLow bed\nExtendable flat bed"
+  },
+  {
+   "fieldname": "bed_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Bed Number",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "make",
+   "fieldtype": "Data",
+   "label": "Make"
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "number_of_axles",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Number of Axles"
+  },
+  {
+   "fieldname": "length",
+   "fieldtype": "Float",
+   "label": "Length"
+  },
+  {
+   "fieldname": "width",
+   "fieldtype": "Float",
+   "label": "Width"
+  },
+  {
+   "fieldname": "load_capacity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Load Capacity (in Ton)"
+  },
+  {
+   "fieldname": "color",
+   "fieldtype": "Data",
+   "label": "Color"
+  },
+  {
+   "fieldname": "section_break_tyres",
+   "fieldtype": "Section Break",
+   "label": "Tyre Types"
+  },
+  {
+   "fieldname": "left_tyres",
+   "fieldtype": "Table",
+   "label": "Left Tyres",
+   "options": "Bed Tyre"
+  },
+  {
+   "fieldname": "right_tyres",
+   "fieldtype": "Table",
+   "label": "Right Tyres",
+   "options": "Bed Tyre"
+  },
+  {
+   "fieldname": "section_break_ekkj",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "safety_tag_date",
+   "fieldtype": "Date",
+   "label": "Safety Tag Date"
+  },
+  {
+   "fieldname": "column_break_ycqj",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_assignment",
+   "fieldtype": "Section Break",
+   "label": "Assignment Status"
+  },
+  {
+   "fieldname": "current_vehicle",
+   "fieldtype": "Link",
+   "label": "Current Vehicle",
+   "options": "Vehicle",
+   "read_only": 1
+  },
+  {
+   "default": "Available",
+   "fieldname": "assignment_status",
+   "fieldtype": "Select",
+   "label": "Assignment Status",
+   "options": "Available\nAssigned",
+   "read_only": 1
+  },
+  {
+   "fieldname": "assign_date",
+   "fieldtype": "Date",
+   "label": "Assign Date",
+   "read_only": 1
+  },
+  {
+   "description": "Total kilometers run across all assignments",
+   "fieldname": "total_kms_run",
+   "fieldtype": "Float",
+   "label": "Total KMs Run",
+   "read_only": 1
+  },
+  {
+   "fieldname": "last_maintenance_date",
+   "fieldtype": "Date",
+   "label": "Last Maintenance Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "last_maintenance_km",
+   "fieldtype": "Float",
+   "label": "Last Maintenance KM",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_qmbq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_vszw",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-01-10 15:42:40.790011",
+ "modified_by": "Administrator",
+ "module": "logistics maintaenance",
+ "name": "Bed",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "bed_number"
+}

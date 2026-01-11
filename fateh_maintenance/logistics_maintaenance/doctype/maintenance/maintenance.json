@@ -1,0 +1,291 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2025-01-27 00:00:00",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "maintenance_section",
+  "naming_series",
+  "linked_to_type",
+  "linked_to",
+  "maintenance_type",
+  "column_break_1",
+  "status",
+  "maintenance_date",
+  "odo_count",
+  "column_break_yhsb",
+  "trigger_type",
+  "trigger_date",
+  "trigger_km",
+  "section_break_personnel",
+  "supervisor",
+  "column_break_uyxa",
+  "mechanic",
+  "section_break_description",
+  "description",
+  "section_break_vehicle_history",
+  "vehicle_history",
+  "section_break_materials",
+  "company",
+  "column_break_cesv",
+  "default_warehouse",
+  "section_break_hpae",
+  "materials",
+  "material_utilization",
+  "section_break_stock",
+  "auto_stock_deduct",
+  "expense_account",
+  "cost_center",
+  "stock_entry",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "MTN-.YYYY.-",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "maintenance_section",
+   "fieldtype": "Section Break",
+   "label": "Maintenance Information"
+  },
+  {
+   "default": "Vehicle",
+   "fieldname": "linked_to_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Maintenance For",
+   "options": "Vehicle\nBed",
+   "reqd": 1
+  },
+  {
+   "fieldname": "linked_to",
+   "fieldtype": "Dynamic Link",
+   "in_list_view": 1,
+   "label": "Vehicle/Bed",
+   "options": "linked_to_type",
+   "reqd": 1
+  },
+  {
+   "fieldname": "maintenance_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Maintenance Type",
+   "options": "General Service\nTyre Replacement\nTyre Rotation\nEngine Service\nBrake Service\nOil Change\nInspection\nRepair\nOther",
+   "reqd": 1
+  },
+  {
+   "default": "Waiting",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "Waiting\nIn Progress\nCompleted\nCancelled",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Today",
+   "fieldname": "maintenance_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date",
+   "reqd": 1
+  },
+  {
+   "description": "Odometer reading at time of maintenance",
+   "fieldname": "odo_count",
+   "fieldtype": "Float",
+   "label": "Odometer Count (KM)",
+   "reqd": 1
+  },
+  {
+   "default": "None",
+   "fieldname": "trigger_type",
+   "fieldtype": "Select",
+   "label": "Trigger Type",
+   "options": "Date Based\nKM Based\nBoth\nNone"
+  },
+  {
+   "depends_on": "eval:doc.trigger_type == 'Date Based' || doc.trigger_type == 'Both'",
+   "description": "Next maintenance date for date-based notifications",
+   "fieldname": "trigger_date",
+   "fieldtype": "Date",
+   "label": "Next Maintenance Date"
+  },
+  {
+   "depends_on": "eval:doc.trigger_type == 'KM Based' || doc.trigger_type == 'Both'",
+   "description": "Next maintenance odometer reading for KM-based notifications",
+   "fieldname": "trigger_km",
+   "fieldtype": "Float",
+   "label": "Next Maintenance KM"
+  },
+  {
+   "fieldname": "section_break_personnel",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "supervisor",
+   "fieldtype": "Data",
+   "label": "Supervisor"
+  },
+  {
+   "fieldname": "mechanic",
+   "fieldtype": "Data",
+   "label": "Mechanic"
+  },
+  {
+   "fieldname": "section_break_description",
+   "fieldtype": "Section Break",
+   "label": "Description"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text Editor",
+   "label": "Description"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_break_vehicle_history",
+   "fieldtype": "Section Break",
+   "label": "Vehicle History (Auto Fetched)"
+  },
+  {
+   "fieldname": "vehicle_history",
+   "fieldtype": "Table",
+   "label": "Vehicle Log History",
+   "options": "Maintenance Vehicle History",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_materials",
+   "fieldtype": "Section Break",
+   "label": "Materials"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company"
+  },
+  {
+   "description": "Default warehouse for material deduction.",
+   "fieldname": "default_warehouse",
+   "fieldtype": "Link",
+   "label": "Default Warehouse",
+   "options": "Warehouse"
+  },
+  {
+   "fieldname": "materials",
+   "fieldtype": "Table",
+   "label": "Materials Used",
+   "options": "Maintenance Material"
+  },
+  {
+   "description": "Total cost of materials used",
+   "fieldname": "material_utilization",
+   "fieldtype": "Currency",
+   "label": "Total Material Utilization",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_stock",
+   "fieldtype": "Section Break",
+   "label": "Stock Management"
+  },
+  {
+   "default": "1",
+   "description": "Automatically deduct stock when maintenance is completed",
+   "fieldname": "auto_stock_deduct",
+   "fieldtype": "Check",
+   "label": "Auto Stock Deduct"
+  },
+  {
+   "fieldname": "expense_account",
+   "fieldtype": "Link",
+   "label": "Expense Account",
+   "options": "Account",
+   "description": "Default expense account for stock entry items"
+  },
+  {
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "label": "Cost Center",
+   "options": "Cost Center",
+   "description": "Default cost center for stock entry items"
+  },
+  {
+   "fieldname": "stock_entry",
+   "fieldtype": "Link",
+   "label": "Stock Entry",
+   "options": "Stock Entry",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_yhsb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_uyxa",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_cesv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_hpae",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Maintenance",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-01-11 13:48:16.545651",
+ "modified_by": "Administrator",
+ "module": "logistics maintaenance",
+ "name": "Maintenance",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "linked_to"
+}

@@ -44,6 +44,9 @@ app_license = "mit"
 
 # include js in doctype views
 # doctype_js = {"doctype" : "public/js/doctype.js"}
+doctype_js = {
+	"Driver": "public/js/driver.js"
+}
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -138,10 +141,8 @@ app_license = "mit"
 # Hook on document methods and events
 
 # doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
+# 	"Driver": {
+# 		"validate": "fateh_maintenance.logistics_maintaenance.doctype.driver_hooks.populate_default_equipment"
 # 	}
 # }
 
@@ -242,3 +243,25 @@ app_license = "mit"
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
 
+fixtures = [
+    {
+        "dt": "Custom Field",
+        "filters": [
+            [
+                "name",
+                "in",
+                [
+                    "Vehicle-status",
+                    "Driver-equipment_section",
+                    "Driver-equipment_list"
+                ]
+            ]
+        ]
+    }
+]# Scheduled Tasks
+# ---------------
+# scheduler_events = {
+#     "daily": [
+#         "fateh_maintenance.logistics_maintaenance.doctype.bed_maintenance_schedule.bed_maintenance_schedule.check_maintenance_schedules"
+#     ]
+# }

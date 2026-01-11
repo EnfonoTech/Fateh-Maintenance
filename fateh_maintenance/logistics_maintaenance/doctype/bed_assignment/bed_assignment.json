@@ -1,0 +1,125 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2025-01-27 00:00:00",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "bed",
+  "vehicle",
+  "assign_date",
+  "assign_odometer",
+  "column_break_1",
+  "remove_date",
+  "remove_odometer",
+  "status",
+  "section_break_kms",
+  "total_kms_run"
+ ],
+ "fields": [
+  {
+   "default": "BA-.YYYY.-",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Series",
+   "options": "BA-.YYYY.-",
+   "reqd": 1
+  },
+  {
+   "fieldname": "bed",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Bed",
+   "options": "Bed",
+   "reqd": 1
+  },
+  {
+   "fieldname": "vehicle",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Vehicle",
+   "options": "Vehicle",
+   "reqd": 1
+  },
+  {
+   "default": "Today",
+   "fieldname": "assign_date",
+   "fieldtype": "Date",
+   "label": "Assign Date",
+   "reqd": 1
+  },
+  {
+   "description": "Odometer reading when bed is assigned",
+   "fieldname": "assign_odometer",
+   "fieldtype": "Float",
+   "label": "Assign Odometer (KM)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "remove_date",
+   "fieldtype": "Date",
+   "label": "Remove Date"
+  },
+  {
+   "depends_on": "eval:doc.remove_date",
+   "fieldname": "remove_odometer",
+   "fieldtype": "Float",
+   "label": "Remove Odometer (KM)"
+  },
+  {
+   "default": "Assigned",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "Assigned\nRemoved",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_kms",
+   "fieldtype": "Section Break",
+   "label": "KM Tracking"
+  },
+  {
+   "description": "Total KMs run while bed was assigned to this vehicle",
+   "fieldname": "total_kms_run",
+   "fieldtype": "Float",
+   "label": "Total KMs Run",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-01-10 15:43:42.269661",
+ "modified_by": "Administrator",
+ "module": "logistics maintaenance",
+ "name": "Bed Assignment",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "bed"
+}

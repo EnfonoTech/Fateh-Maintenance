@@ -1,0 +1,89 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "hash",
+ "creation": "2025-01-27 00:00:00",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "axle_number",
+  "type",
+  "brand",
+  "size",
+  "column_break_1",
+  "tyre_number",
+  "changed_km",
+  "km_run"
+ ],
+ "fields": [
+  {
+   "columns": 1,
+   "fieldname": "axle_number",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Axle Number"
+  },
+  {
+   "columns": 1,
+   "fieldname": "type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Type",
+   "options": "IN\nOUT"
+  },
+  {
+   "columns": 2,
+   "fieldname": "brand",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Brand"
+  },
+  {
+   "columns": 1,
+   "fieldname": "size",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Size"
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "columns": 1,
+   "fieldname": "changed_km",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Changed KM"
+  },
+  {
+   "columns": 2,
+   "fieldname": "tyre_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Tyre Number"
+  },
+  {
+   "columns": 2,
+   "fieldname": "km_run",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "KM Run"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-01-10 11:44:36.959350",
+ "modified_by": "Administrator",
+ "module": "logistics maintaenance",
+ "name": "Bed Tyre",
+ "naming_rule": "Random",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

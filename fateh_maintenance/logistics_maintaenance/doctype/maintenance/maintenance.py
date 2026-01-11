@@ -12,10 +12,7 @@ class Maintenance(Document):
 	def validate(self):
 		self.validate_odometer()
 		self.validate_status()
-		self.validate_personnel()
 		self.validate_company()
-		self.calculate_material_utilization()
-		self.fetch_vehicle_history()
 		self.check_vehicle_status()
 		
 	def validate_odometer(self):
@@ -54,15 +51,6 @@ class Maintenance(Document):
 		if old_status == "Cancelled" and self.status != "Cancelled":
 			frappe.throw(_("Cannot change status from Cancelled"))
 	
-	def validate_personnel(self):
-		"""Validate supervisor and mechanic are active employees"""
-		if self.supervisor:
-			if not frappe.db.exists("Employee", {"name": self.supervisor, "status": "Active"}):
-				frappe.throw(_("Supervisor must be an active employee"))
-		
-		if self.mechanic:
-			if not frappe.db.exists("Employee", {"name": self.mechanic, "status": "Active"}):
-				frappe.throw(_("Mechanic must be an active employee"))
 	
 	def validate_company(self):
 		"""Validate and auto-set company when auto stock deduct is enabled and materials exist"""
@@ -74,92 +62,6 @@ class Maintenance(Document):
 				self.company = default_company
 			else:
 				frappe.throw(_("Company is required when auto stock deduct is enabled and materials are added. Please set company field or default company in User Defaults."))
-	
-	def calculate_material_utilization(self):
-		"""Calculate total material utilization cost"""
-		total = 0
-		if self.materials:
-			for material in self.materials:
-				if not material.amount:
-					material.amount = flt(material.quantity) * flt(material.rate)
-				total += flt(material.amount)
-		
-		self.material_utilization = total
-	
-	def fetch_vehicle_history(self):
-		"""Auto-fetch vehicle history (Vehicle Log entries) - Only for Vehicle"""
-		if self.linked_to_type != "Vehicle" or not self.linked_to:
-			return
-		
-		# Clear existing history
-		self.vehicle_history = []
-		
-		# Fetch recent Vehicle Log entries
-		vehicle_logs = frappe.get_all(
-			"Vehicle Log",
-			filters={
-				"license_plate": self.linked_to,
-				"docstatus": 1
-			},
-			fields=["name", "date", "odometer", "fuel_qty", "price", "employee"],
-			order_by="date desc, creation desc",
-			limit=10
-		)
-		
-		for log in vehicle_logs:
-			# Build description from available fields
-			description_parts = ["Vehicle Log Entry"]
-			if log.fuel_qty:
-				description_parts.append(f"Fuel: {log.fuel_qty}L")
-			if log.employee:
-				emp_name = frappe.db.get_value("Employee", log.employee, "employee_name") or log.employee
-				description_parts.append(f"Employee: {emp_name}")
-			
-			description = " | ".join(description_parts)
-			
-			self.append("vehicle_history", {
-				"log_date": log.date,
-				"log_type": "Vehicle Log",
-				"odometer": log.odometer,
-				"description": description,
-				"reference": log.name,
-				"reference_doctype": "Vehicle Log",
-				"vehicle": self.linked_to
-			})
-		
-		# Fetch previous maintenance records
-		previous_maintenance = frappe.get_all(
-			"Maintenance",
-			filters={
-				"linked_to_type": "Vehicle",
-				"linked_to": self.linked_to,
-				"docstatus": 1,
-				"name": ("!=", self.name) if not self.is_new() else ("!=", "")
-			},
-			fields=["name", "maintenance_date", "odo_count", "maintenance_type", "description"],
-			order_by="maintenance_date desc, creation desc",
-			limit=5
-		)
-		
-		for maint in previous_maintenance:
-			# Strip HTML tags from description if it's a Text Editor field
-			desc_text = ""
-			if maint.description:
-				from frappe.utils import strip_html_tags
-				desc_text = strip_html_tags(maint.description)
-				# Limit description length
-				if len(desc_text) > 100:
-					desc_text = desc_text[:100] + "..."
-			
-			self.append("vehicle_history", {
-				"log_date": maint.maintenance_date,
-				"log_type": "Maintenance",
-				"odometer": maint.odo_count,
-				"description": f"{maint.maintenance_type}: {desc_text}",
-				"reference": maint.name,
-				"reference_doctype": "Maintenance",
-				"vehicle": self.linked_to
-			})
 	
 	def check_vehicle_status(self):
 		"""Check and update vehicle status based on maintenance status"""
@@ -236,10 +138,6 @@ class Maintenance(Document):
 		# Make vehicle active if no other pending maintenance
 		if self.linked_to_type == "Vehicle":
 			self.update_vehicle_status()
-		
-		# Create Vehicle Log entry for this maintenance (Vehicle only)
-		if self.linked_to_type == "Vehicle":
-			self.create_vehicle_log()
 	
 	def create_stock_entry(self):
 		"""Create stock entry to deduct materials"""
@@ -316,7 +214,6 @@ class Maintenance(Document):
 				"qty": material.quantity,
 				"uom": material.uom,
 				"s_warehouse": warehouse,
-				"rate": material.rate,
 				"expense_account": expense_account,
 				"cost_center": cost_center,
 				"serial_no": material.serial_no,
@@ -343,7 +240,7 @@ class Maintenance(Document):
 		vehicle_log.date = self.maintenance_date
 		vehicle_log.odometer = int(self.odo_count)
 		vehicle_log.employee = self.supervisor
-		
+			
 		# Set custom field if it exists
 		if frappe.db.has_column("Vehicle Log", "custom_maintenance"):
 			vehicle_log.custom_maintenance = self.name
@@ -422,9 +319,10 @@ def get_vehicle_info(linked_to_type, linked_to):
 		)
 		if info:
 			# Map bed fields to expected format
+			# Use total_kms_run for odo_count if available, otherwise use last_maintenance_km
 			return {
-				"last_odometer": info.get("last_maintenance_km"),
-				"location": None,
+				"last_odometer": info.get("total_kms_run") or info.get("last_maintenance_km"),
+				"location": None,  # Bed doesn't have location, but field is available for manual entry
 				"current_vehicle": info.get("current_vehicle"),
 				"total_kms_run": info.get("total_kms_run")
 			}

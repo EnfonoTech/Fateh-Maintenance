@@ -19,7 +19,7 @@ frappe.ui.form.on('Maintenance', {
 			}
 		}
 		
-		// Calculate material amount on change
+		// Set query for warehouse in materials table
 		frm.set_query('warehouse', 'materials', function(doc, cdt, cdn) {
 			let filters = {
 				'is_group': 0
@@ -79,14 +79,14 @@ frappe.ui.form.on('Maintenance', {
 				},
 				callback: function(r) {
 					if (r.message) {
-						if (r.message.last_odometer) {
+						// For Bed, use total_kms_run; for Vehicle, use last_odometer
+						if (frm.doc.linked_to_type === 'Bed' && r.message.total_kms_run) {
+							frm.set_value('odo_count', r.message.total_kms_run);
+						} else if (r.message.last_odometer) {
 							frm.set_value('odo_count', r.message.last_odometer);
 						}
 						if (r.message.location && !frm.doc.location) {
 							frm.set_value('location', r.message.location);
-						}
-						if (frm.doc.linked_to_type === 'Vehicle') {
-							frm.refresh_field('vehicle_history');
 						}
 					}
 				}
@@ -100,12 +100,7 @@ frappe.ui.form.on('Maintenance', {
 			frm.set_value('linked_to', '');
 			frm.refresh_field('linked_to');
 		}
-		// Hide/show location field based on type
-		if (frm.doc.linked_to_type === 'Vehicle') {
-			frm.set_df_property('location', 'hidden', 0);
-		} else {
-			frm.set_df_property('location', 'hidden', 1);
-		}
+		// Location field is available for both Vehicle and Bed
 	},
 	
 	linked_to: function(frm) {
@@ -118,14 +113,14 @@ frappe.ui.form.on('Maintenance', {
 				},
 				callback: function(r) {
 					if (r.message) {
-						if (r.message.last_odometer) {
+						// For Bed, use total_kms_run; for Vehicle, use last_odometer
+						if (frm.doc.linked_to_type === 'Bed' && r.message.total_kms_run) {
+							frm.set_value('odo_count', r.message.total_kms_run);
+						} else if (r.message.last_odometer) {
 							frm.set_value('odo_count', r.message.last_odometer);
 						}
-						if (r.message.location) {
+						if (r.message.location && !frm.doc.location) {
 							frm.set_value('location', r.message.location);
-						}
-						if (frm.doc.linked_to_type === 'Vehicle') {
-							frm.refresh_field('vehicle_history');
 						}
 					}
 				}
@@ -149,23 +144,7 @@ frappe.ui.form.on('Maintenance', {
 		}
 	},
 	
-	calculate_material_amount: function(frm, cdt, cdn) {
-		let row = locals[cdt][cdn];
-		if (row.quantity && row.rate) {
-			frappe.model.set_value(cdt, cdn, 'amount', flt(row.quantity) * flt(row.rate));
-			frm.events.calculate_total_material_utilization(frm);
-		}
-	},
-	
-	calculate_total_material_utilization: function(frm) {
-		let total = 0;
-		if (frm.doc.materials) {
-			frm.doc.materials.forEach(function(row) {
-				total += flt(row.amount || 0);
-			});
-		}
-		frm.set_value('material_utilization', total);
-	},
+	// Material amount calculation removed - Stock Entry uses stock UOM rate automatically
 	
 	default_warehouse: function(frm) {
 		// Update warehouse in all material rows if default_warehouse is set
@@ -180,15 +159,8 @@ frappe.ui.form.on('Maintenance', {
 	}
 });
 
-// Calculate amount when quantity or rate changes
+// Material rate/amount removed - Stock Entry uses stock UOM rate automatically
 frappe.ui.form.on('Maintenance Material', {
-	quantity: function(frm, cdt, cdn) {
-		frm.events.calculate_material_amount(frm, cdt, cdn);
-	},
-	
-	rate: function(frm, cdt, cdn) {
-		frm.events.calculate_material_amount(frm, cdt, cdn);
-	},
 	
 	item_code: function(frm, cdt, cdn) {
 		let row = locals[cdt][cdn];

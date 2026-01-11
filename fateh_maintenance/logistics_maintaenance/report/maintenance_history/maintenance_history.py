@@ -14,13 +14,6 @@ def execute(filters=None):
 def get_columns():
 	return [
 		{
-			"fieldname": "name",
-			"label": _("Maintenance ID"),
-			"fieldtype": "Link",
-			"options": "Maintenance",
-			"width": 150
-		},
-		{
 			"fieldname": "linked_to_type",
 			"label": _("Type"),
 			"fieldtype": "Data",
@@ -28,7 +21,7 @@ def get_columns():
 		},
 		{
 			"fieldname": "linked_to",
-			"label": _("Vehicle/Bed"),
+			"label": _("Current Vehicle"),
 			"fieldtype": "Dynamic Link",
 			"options": "linked_to_type",
 			"width": 150
@@ -47,9 +40,9 @@ def get_columns():
 		},
 		{
 			"fieldname": "odo_count",
-			"label": _("Odometer (KM)"),
+			"label": _("Vehicle odo After maintenance"),
 			"fieldtype": "Float",
-			"width": 130
+			"width": 200
 		},
 		{
 			"fieldname": "status",
@@ -58,46 +51,14 @@ def get_columns():
 			"width": 100
 		},
 		{
-			"fieldname": "supervisor",
-			"label": _("Supervisor"),
-			"fieldtype": "Link",
-			"options": "Employee",
-			"width": 150
-		},
-		{
-			"fieldname": "mechanic",
-			"label": _("Mechanic"),
-			"fieldtype": "Link",
-			"options": "Employee",
-			"width": 150
-		},
-		{
-			"fieldname": "material_utilization",
-			"label": _("Material Cost"),
-			"fieldtype": "Currency",
-			"width": 130
-		},
-		{
-			"fieldname": "location",
-			"label": _("Location"),
-			"fieldtype": "Data",
-			"width": 120
-		},
-		{
-			"fieldname": "trigger_type",
-			"label": _("Trigger Type"),
-			"fieldtype": "Data",
-			"width": 120
-		},
-		{
-			"fieldname": "next_maintenance_date",
-			"label": _("Next Date"),
+			"fieldname": "trigger_date",
+			"label": _("Trigger Date"),
 			"fieldtype": "Date",
 			"width": 120
 		},
 		{
-			"fieldname": "next_maintenance_km",
-			"label": _("Next KM"),
+			"fieldname": "trigger_km",
+			"label": _("Trigger KM"),
 			"fieldtype": "Float",
 			"width": 120
 		}
@@ -110,12 +71,6 @@ def get_data(filters):
 	if filters.get("linked_to_type"):
 		conditions["linked_to_type"] = filters.get("linked_to_type")
 	
-	if filters.get("linked_to"):
-		conditions["linked_to"] = filters.get("linked_to")
-	
-	if filters.get("maintenance_type"):
-		conditions["maintenance_type"] = filters.get("maintenance_type")
-	
 	if filters.get("status"):
 		conditions["status"] = filters.get("status")
 	
@@ -126,25 +81,13 @@ def get_data(filters):
 	elif filters.get("to_date"):
 		conditions["maintenance_date"] = ["<=", filters.get("to_date")]
 	
-	if filters.get("trigger_type"):
-		conditions["trigger_type"] = filters.get("trigger_type")
-	
 	maintenance_records = frappe.get_all(
 		"Maintenance",
 		filters=conditions,
-		fields=[
-			"name", "linked_to_type", "linked_to", "maintenance_type", "maintenance_date",
-			"odo_count", "status", "supervisor", "mechanic", "material_utilization",
-			"location", "trigger_type", "next_maintenance_date", "next_maintenance_km"
-		],
+		fields=["linked_to_type", "linked_to", "maintenance_type", "maintenance_date", "odo_count", "status", "trigger_date", "trigger_km"],
 		order_by="maintenance_date desc, creation desc"
 	)
 	
-	# Get employee names
-	for record in maintenance_records:
-		if record.get("supervisor"):
-			record["supervisor"] = frappe.db.get_value("Employee", record["supervisor"], "employee_name") or record["supervisor"]
-		if record.get("mechanic"):
-			record["mechanic"] = frappe.db.get_value("Employee", record["mechanic"], "employee_name") or record["mechanic"]
-	
+	# Filter out trigger_date and trigger_km if they don't exist (None values)
+	# The columns will still show but with empty values
 	return maintenance_records

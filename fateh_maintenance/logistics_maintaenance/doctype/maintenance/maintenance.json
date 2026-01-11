@@ -15,6 +15,7 @@
   "status",
   "maintenance_date",
   "odo_count",
+  "location",
   "column_break_yhsb",
   "trigger_type",
   "trigger_date",
@@ -25,19 +26,16 @@
   "mechanic",
   "section_break_description",
   "description",
-  "section_break_vehicle_history",
-  "vehicle_history",
   "section_break_materials",
   "company",
+  "cost_center",
   "column_break_cesv",
   "default_warehouse",
+  "expense_account",
   "section_break_hpae",
   "materials",
-  "material_utilization",
   "section_break_stock",
   "auto_stock_deduct",
-  "expense_account",
-  "cost_center",
   "stock_entry",
   "amended_from"
  ],
@@ -103,7 +101,6 @@
    "reqd": 1
   },
   {
-   "description": "Odometer reading at time of maintenance",
    "fieldname": "odo_count",
    "fieldtype": "Float",
    "label": "Odometer Count (KM)",
@@ -155,19 +152,6 @@
    "label": "Description"
   },
   {
-   "collapsible": 1,
-   "fieldname": "section_break_vehicle_history",
-   "fieldtype": "Section Break",
-   "label": "Vehicle History (Auto Fetched)"
-  },
-  {
-   "fieldname": "vehicle_history",
-   "fieldtype": "Table",
-   "label": "Vehicle Log History",
-   "options": "Maintenance Vehicle History",
-   "read_only": 1
-  },
-  {
    "fieldname": "section_break_materials",
    "fieldtype": "Section Break",
    "label": "Materials"
@@ -192,13 +176,6 @@
    "options": "Maintenance Material"
   },
   {
-   "description": "Total cost of materials used",
-   "fieldname": "material_utilization",
-   "fieldtype": "Currency",
-   "label": "Total Material Utilization",
-   "read_only": 1
-  },
-  {
    "fieldname": "section_break_stock",
    "fieldtype": "Section Break",
    "label": "Stock Management"
@@ -211,18 +188,18 @@
    "label": "Auto Stock Deduct"
   },
   {
+   "description": "Default expense account for stock entry items",
    "fieldname": "expense_account",
    "fieldtype": "Link",
    "label": "Expense Account",
-   "options": "Account",
-   "description": "Default expense account for stock entry items"
+   "options": "Account"
   },
   {
+   "description": "Default cost center for stock entry items",
    "fieldname": "cost_center",
    "fieldtype": "Link",
    "label": "Cost Center",
-   "options": "Cost Center",
-   "description": "Default cost center for stock entry items"
+   "options": "Cost Center"
   },
   {
    "fieldname": "stock_entry",
@@ -256,12 +233,17 @@
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Data",
+   "label": "Location "
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-01-11 13:48:16.545651",
+ "modified": "2026-01-11 16:51:58.082955",
  "modified_by": "Administrator",
  "module": "logistics maintaenance",
  "name": "Maintenance",
@@ -286,6 +268,11 @@
  "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": [],
+ "states": [
+  {
+   "color": "Green",
+   "title": "completed"
+  }
+ ],
  "title_field": "linked_to"
 }

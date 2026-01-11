@@ -17,10 +17,6 @@
   "load_capacity",
   "length",
   "width",
-  "section_break_tyres",
-  "left_tyres",
-  "section_break_ekkj",
-  "right_tyres",
   "section_break_assignment",
   "current_vehicle",
   "assignment_status",
@@ -29,7 +25,11 @@
   "total_kms_run",
   "column_break_vszw",
   "last_maintenance_date",
-  "last_maintenance_km"
+  "last_maintenance_km",
+  "section_break_tyres",
+  "left_tyres",
+  "section_break_ekkj",
+  "right_tyres"
  ],
  "fields": [
   {
@@ -170,7 +170,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-01-10 15:42:40.790011",
+ "modified": "2026-01-11 16:50:27.744056",
  "modified_by": "Administrator",
  "module": "logistics maintaenance",
  "name": "Bed",

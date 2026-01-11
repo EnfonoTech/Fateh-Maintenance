@@ -17,7 +17,7 @@ def get_columns():
 			"fieldname": "linked_to_type",
 			"label": _("Type"),
 			"fieldtype": "Data",
-			"width": 100
+			"width": 120
 		},
 		{
 			"fieldname": "linked_to",
@@ -52,13 +52,13 @@ def get_columns():
 		},
 		{
 			"fieldname": "trigger_date",
-			"label": _("Trigger Date"),
+			"label": _("Next Maintenance Date"),
 			"fieldtype": "Date",
 			"width": 120
 		},
 		{
 			"fieldname": "trigger_km",
-			"label": _("Trigger KM"),
+			"label": _("Next Maintenance KM"),
 			"fieldtype": "Float",
 			"width": 120
 		}

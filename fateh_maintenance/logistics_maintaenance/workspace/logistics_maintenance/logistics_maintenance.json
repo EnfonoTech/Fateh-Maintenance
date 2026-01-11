@@ -1,0 +1,87 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"96eHr6-Eo-\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Logistics Maintenance</span>\",\"col\":12}},{\"id\":\"XNldsrY-MV\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Beds\",\"col\":3}},{\"id\":\"ssJDEdLxTQ\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Available Beds\",\"col\":3}},{\"id\":\"iZjPPsvUhd\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"XpFAqhmwLl\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Bed\",\"col\":3}},{\"id\":\"imOngjDJ7r\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Bed Assignment\",\"col\":3}},{\"id\":\"wtPnqJ3Tsl\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Maintenance\",\"col\":3}},{\"id\":\"wPC6avnYIu\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Maintenance History\",\"col\":3}},{\"id\":\"pqn5oTXqSt\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle\",\"col\":3}},{\"id\":\"TG-tnZofmD\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Maintenance\",\"col\":3}},{\"id\":\"BxSBBib2ky\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle Log\",\"col\":3}}]",
+ "creation": "2026-01-11 14:18:43.155805",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "setting-gear",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Logistics Maintenance",
+ "links": [],
+ "modified": "2026-01-11 14:56:40.851980",
+ "modified_by": "Administrator",
+ "module": "logistics maintaenance",
+ "name": "Logistics Maintenance",
+ "number_cards": [
+  {
+   "label": "Total Beds",
+   "number_card_name": "Total Beds"
+  },
+  {
+   "label": "Available Beds",
+   "number_card_name": "Available Beds"
+  }
+ ],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 3.0,
+ "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Bed",
+   "link_to": "Bed",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Maintenance History",
+   "link_to": "Maintenance History",
+   "report_ref_doctype": "Maintenance",
+   "type": "Report"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Bed Assignment",
+   "link_to": "Bed Assignment",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Maintenance",
+   "link_to": "Maintenance",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Vehicle Log",
+   "link_to": "Vehicle Log",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Vehicle",
+   "link_to": "Vehicle Log",
+   "stats_filter": "[]",
+   "type": "DocType"
+  }
+ ],
+ "title": "Logistics Maintenance"
+}
